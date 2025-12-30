@@ -22,20 +22,20 @@ Simple loading screen engine for Nuxt 4+.
 
 ## Features
 
-- 🔄 **Automatic Loader Registration**: Automatically registers loader components from your specified directory.
+- 🔄 **Automatic Loader Registration**: Automatically registers loader components from your specified directory as global components.
 - 🛣️ **Route-based Configuration**: Assign specific loaders to different routes using `routeRules`.
 - 🎨 **TailwindCSS Integration**: Includes TailwindCSS support out of the box.
-- ⚡ **Zero Configuration**: Works with sensible defaults, but fully customizable.
+- ⚡ **Zero Configuration**: Works with sensible defaults, but is fully customizable.
 
 ## Quick Setup
 
-1. Add `nuxt-loaders` dependency to your project
+1. Add `nuxt-loaders` dependency to your project:
 
 ```bash
 npx nuxi module add nuxt-loaders
 ```
 
-2. Add `nuxt-loaders` to the `modules` section of `nuxt.config.ts`
+2. Add `nuxt-loaders` to the `modules` section of `nuxt.config.ts` (if not already added by nuxi):
 
 ```ts
 export default defineNuxtConfig({
@@ -47,7 +47,7 @@ That's it! You can now use Nuxt Loaders in your Nuxt app ✨
 
 ## Configuration
 
-You can configure the module in your `nuxt.config.ts`:
+You can configure the module in your `nuxt.config.ts`. The components in `loadersDir` will be automatically imported and can be referenced by name in `routeRules`.
 
 ```ts
 export default defineNuxtConfig({
@@ -57,11 +57,12 @@ export default defineNuxtConfig({
     // Default: 'app/components/loaders'
     loadersDir: "app/components/loaders",
 
-    // Automatically setup the module
+    // Automatically setup the module (injects global components)
     // Default: true
     autoSetup: true,
 
     // Define rules for which loader to use on which route
+    // Keys are route patterns (supports wildcards *), values are component names
     routeRules: {
       "/": "MyLoader",
       "/admin/*": "AdminLoader",
@@ -81,7 +82,7 @@ export default defineNuxtConfig({
 ## Usage
 
 1. Create your loader components in `app/components/loaders` (or your configured `loadersDir`).
-2. The module will automatically register these components.
+2. The module will automatically register these components globally.
 3. Use `routeRules` in your `nuxt.config.ts` to specify which loader should be active for specific routes.
 
 Example loader component (`app/components/loaders/MyLoader.vue`):
